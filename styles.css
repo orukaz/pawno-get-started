@@ -1007,6 +1007,14 @@ select {
   gap: 1.5rem 1.75rem;
 }
 
+.consent-fields {
+  display: grid;
+  gap: 0.75rem;
+  margin-inline: calc(var(--card-padding) * -1);
+  border-top: 1px solid #e5ebf1;
+  padding: 1.25rem var(--card-padding) 0;
+}
+
 .signup-card--join .field {
   gap: 0.625rem;
 }
@@ -1173,10 +1181,6 @@ select {
   font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.55;
-}
-
-.checkbox-field + .checkbox-field {
-  margin-top: 0.75rem;
 }
 
 .checkbox-field input {

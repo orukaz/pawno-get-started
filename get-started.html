@@ -553,19 +553,21 @@
                   </select>
                 </label>
 
-                <label className="checkbox-field checkbox-field--terms sm:col-span-2">
-                  <input type="checkbox" required />
-                  <span>
-                    {t.form.terms.prefix} <a href="https://www.pawno.io/en/terms-of-use">{t.form.terms.terms}</a>{" "}
-                    {t.form.terms.middle} <a href="https://www.pawno.io/en/privacy-policy">{t.form.terms.privacy}</a>
-                    {t.form.terms.suffix}
-                  </span>
-                </label>
+                <div className="consent-fields sm:col-span-2">
+                  <label className="checkbox-field checkbox-field--terms">
+                    <input type="checkbox" required />
+                    <span>
+                      {t.form.terms.prefix} <a href="https://www.pawno.io/en/terms-of-use">{t.form.terms.terms}</a>{" "}
+                      {t.form.terms.middle} <a href="https://www.pawno.io/en/privacy-policy">{t.form.terms.privacy}</a>
+                      {t.form.terms.suffix}
+                    </span>
+                  </label>
 
-                <label className="checkbox-field checkbox-field--campaign sm:col-span-2">
-                  <input type="checkbox" name="campaign_consent" />
-                  <span>{t.form.campaignConsent}</span>
-                </label>
+                  <label className="checkbox-field checkbox-field--campaign">
+                    <input type="checkbox" name="campaign_consent" />
+                    <span>{t.form.campaignConsent}</span>
+                  </label>
+                </div>
               </div>
 
               <div className="signup-actions">
