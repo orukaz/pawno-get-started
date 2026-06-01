@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pawno Get Started</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              background: "#ffffff",
+              foreground: "#020618",
+              muted: "#f1f5f9",
+              "muted-foreground": "#62748e",
+              accent: "#f1f5f9",
+              "accent-foreground": "#0f172b",
+              primary: "#0f172b",
+              "primary-foreground": "#f8fafc",
+              brand: "#00CC77",
+              pawno: {
+                green: "#00CC77",
+                greenDark: "#009767",
+                ink: "#020618",
+                navy: "#0f172b",
+                mist: "#f6faf8",
+                line: "#e5ebf1",
+              },
+            },
+            fontFamily: {
+              sans: ["Geist", "Geist Fallback", "ui-sans-serif", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="bg-pawno-mist font-sans text-pawno-ink antialiased">
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="application/json" id="translations">
+      {
+        "en": {
+          "meta": {
+            "title": "Pawno Get Started"
+          },
+          "language": {
+            "label": "Language switcher"
+          },
+          "brand": {
+            "homeLabel": "Pawno home",
+            "back": "Back",
+            "eyebrow": "Pawno account",
+            "headline": "Create an account and compare your options. Decide later.",
+            "body": "Creating an account only saves your details. You can continue later with an offer, a loan, or a sale.",
+            "benefits": [
+              "Free account with no obligation.",
+              "No photos or documents needed now.",
+              "Free courier pickup for your first item until July 31, 2026."
+            ],
+            "learnMore": "Read more about Pawno",
+            "calculatorCta": "Check your possible offer"
+          },
+          "top": {
+            "already": "Already have an account?",
+            "signIn": "Sign in"
+          },
+          "stepper": {
+            "label": "Registration progress",
+            "details": "Your details",
+            "ready": "Account ready"
+          },
+          "form": {
+            "heading": "Create your Pawno account",
+            "intro": "Create your account now. Add details, photos, or documents only when you are ready.",
+            "firstName": "First name",
+            "firstNamePlaceholder": "Maria",
+            "lastName": "Last name",
+            "lastNamePlaceholder": "Garcia",
+            "email": "Email address",
+            "emailPlaceholder": "maria@example.com",
+            "emailHelp": "You will use this email to sign in and receive account updates.",
+            "password": "Password",
+            "passwordPlaceholder": "Create a password",
+            "phone": "Mobile phone",
+            "phonePlaceholder": "+34 612 345 678",
+            "phoneHelp": "No SMS code needed now.",
+            "category": "What would you like an offer for?",
+            "categoryOptions": [
+              { "value": "gold_jewelry", "label": "Gold or jewelry" },
+              { "value": "watch", "label": "Watch" },
+              { "value": "phone_laptop", "label": "Phone or laptop" },
+              { "value": "luxury_accessory", "label": "Luxury accessory" },
+              { "value": "unsure", "label": "I am not sure yet" }
+            ],
+            "timing": "When would you like to continue?",
+            "timingOptions": [
+              { "value": "this_week", "label": "This week" },
+              { "value": "this_month", "label": "This month" },
+              { "value": "checking", "label": "Just checking options" }
+            ],
+            "terms": {
+              "prefix": "I agree to Pawno's",
+              "terms": "Terms of Service",
+              "middle": "and",
+              "privacy": "Privacy Policy",
+              "suffix": "."
+            },
+            "campaignConsent": "I would like to receive Pawno campaign offers and reminders.",
+            "step": "Step 1 of 2",
+            "submit": "Create account",
+            "footerTerms": {
+              "prefix": "By creating an account you agree to Pawno's",
+              "terms": "Terms of Service",
+              "middle": "and",
+              "privacy": "Privacy Policy",
+              "suffix": "."
+            }
+          }
+        },
+        "es": {
+          "meta": {
+            "title": "Crear cuenta en Pawno"
+          },
+          "language": {
+            "label": "Selector de idioma"
+          },
+          "brand": {
+            "homeLabel": "Inicio de Pawno",
+            "back": "Volver",
+            "eyebrow": "Cuenta Pawno",
+            "headline": "Crea una cuenta y compara tus opciones. Decide más tarde.",
+            "body": "Crear una cuenta solo guarda tus datos. Puedes continuar más tarde con una oferta, un préstamo o una venta.",
+            "benefits": [
+              "Cuenta gratuita, sin compromiso.",
+              "No necesitas fotos ni documentos ahora.",
+              "Recogida gratuita por mensajería para tu primer artículo hasta el 31 de julio de 2026."
+            ],
+            "learnMore": "Conoce Pawno",
+            "calculatorCta": "Ver posible oferta"
+          },
+          "top": {
+            "already": "¿Ya tienes una cuenta?",
+            "signIn": "Iniciar sesión"
+          },
+          "stepper": {
+            "label": "Progreso de registro",
+            "details": "Tus datos",
+            "ready": "Cuenta lista"
+          },
+          "form": {
+            "heading": "Crea tu cuenta de Pawno",
+            "intro": "Crea tu cuenta ahora. Añade detalles, fotos o documentos solo cuando estés listo.",
+            "firstName": "Nombre",
+            "firstNamePlaceholder": "Maria",
+            "lastName": "Apellidos",
+            "lastNamePlaceholder": "Garcia",
+            "email": "Correo electrónico",
+            "emailPlaceholder": "maria@example.com",
+            "emailHelp": "Usarás este correo para iniciar sesión y recibir novedades de tu cuenta.",
+            "password": "Contraseña",
+            "passwordPlaceholder": "Crea una contraseña",
+            "phone": "Móvil",
+            "phonePlaceholder": "+34 612 345 678",
+            "phoneHelp": "No necesitas código por SMS ahora.",
+            "category": "¿Sobre qué quieres recibir una oferta?",
+            "categoryOptions": [
+              { "value": "gold_jewelry", "label": "Oro o joyas" },
+              { "value": "watch", "label": "Reloj" },
+              { "value": "phone_laptop", "label": "Teléfono u ordenador portátil" },
+              { "value": "luxury_accessory", "label": "Accesorio de lujo" },
+              { "value": "unsure", "label": "Aún no lo sé" }
+            ],
+            "timing": "¿Cuándo te gustaría continuar?",
+            "timingOptions": [
+              { "value": "this_week", "label": "Esta semana" },
+              { "value": "this_month", "label": "Este mes" },
+              { "value": "checking", "label": "Solo estoy mirando opciones" }
+            ],
+            "terms": {
+              "prefix": "Acepto los",
+              "terms": "Términos del servicio",
+              "middle": "y la",
+              "privacy": "Política de privacidad",
+              "suffix": " de Pawno."
+            },
+            "campaignConsent": "Quiero recibir ofertas y recordatorios de campañas de Pawno.",
+            "step": "Paso 1 de 2",
+            "submit": "Crear cuenta",
+            "footerTerms": {
+              "prefix": "Al crear una cuenta aceptas los",
+              "terms": "Términos del servicio",
+              "middle": "y la",
+              "privacy": "Política de privacidad",
+              "suffix": " de Pawno."
+            }
+          }
+        },
+        "et": {
+          "meta": {
+            "title": "Pawno konto loomine"
+          },
+          "language": {
+            "label": "Keelevalik"
+          },
+          "brand": {
+            "homeLabel": "Pawno avaleht",
+            "back": "Tagasi",
+            "eyebrow": "Pawno konto",
+            "headline": "Loo konto ja võrdle võimalusi. Otsustad hiljem.",
+            "body": "Konto loomine salvestab ainult sinu andmed. Hiljem saad jätkata pakkumise, laenu või müügi võimalusega.",
+            "benefits": [
+              "Konto loomine on tasuta ega seo sind kohustustega.",
+              "Fotosid ega dokumente pole praegu vaja.",
+              "Esimese eseme transport on tasuta kuni 31. juulini 2026."
+            ],
+            "learnMore": "Loe Pawnost lähemalt",
+            "calculatorCta": "Vaata võimalikku pakkumist"
+          },
+          "top": {
+            "already": "Kas sul on juba konto?",
+            "signIn": "Logi sisse"
+          },
+          "stepper": {
+            "label": "Registreerimise edenemine",
+            "details": "Sinu andmed",
+            "ready": "Konto valmis"
+          },
+          "form": {
+            "heading": "Loo Pawno konto",
+            "intro": "Loo konto kohe. Lisa täpsem info, fotod või dokumendid alles siis, kui oled valmis.",
+            "firstName": "Eesnimi",
+            "firstNamePlaceholder": "Maria",
+            "lastName": "Perekonnanimi",
+            "lastNamePlaceholder": "Garcia",
+            "email": "E-posti aadress",
+            "emailPlaceholder": "maria@example.com",
+            "emailHelp": "Kasutad seda e-posti sisselogimiseks ja konto teavituste saamiseks.",
+            "password": "Parool",
+            "passwordPlaceholder": "Loo parool",
+            "phone": "Mobiilinumber",
+            "phonePlaceholder": "+34 612 345 678",
+            "phoneHelp": "SMS-koodi pole praegu vaja.",
+            "category": "Millele soovid pakkumist?",
+            "categoryOptions": [
+              { "value": "gold_jewelry", "label": "Kuld või ehted" },
+              { "value": "watch", "label": "Kell" },
+              { "value": "phone_laptop", "label": "Telefon või sülearvuti" },
+              { "value": "luxury_accessory", "label": "Luksusaksessuaar" },
+              { "value": "unsure", "label": "Ma ei ole veel kindel" }
+            ],
+            "timing": "Millal soovid jätkata?",
+            "timingOptions": [
+              { "value": "this_week", "label": "Sellel nädalal" },
+              { "value": "this_month", "label": "Sellel kuul" },
+              { "value": "checking", "label": "Uurin alles võimalusi" }
+            ],
+            "terms": {
+              "prefix": "Nõustun Pawno",
+              "terms": "kasutustingimustega",
+              "middle": "ja",
+              "privacy": "privaatsuspoliitikaga",
+              "suffix": "."
+            },
+            "campaignConsent": "Soovin saada Pawno kampaaniapakkumisi ja meeldetuletusi.",
+            "step": "Samm 1/2",
+            "submit": "Loo konto",
+            "footerTerms": {
+              "prefix": "Konto loomisega nõustud Pawno",
+              "terms": "kasutustingimustega",
+              "middle": "ja",
+              "privacy": "privaatsuspoliitikaga",
+              "suffix": "."
+            }
+          }
+        }
+      }
+    </script>
+
+    <script type="text/babel">
+      const accountLinks = {
+        home: "./index.html",
+        signIn: "https://www.pawno.io/en/sign-in",
+        calculator: "https://www.pawno.io/en/calculator?type=metals&metal=gold&amount=100&purity=18k",
+      };
+
+      const translations = JSON.parse(document.getElementById("translations").textContent);
+      const languageOptions = [
+        { code: "en", label: "EN" },
+        { code: "es", label: "ES" },
+        { code: "et", label: "ET" },
+      ];
+
+      function resolveInitialLanguage() {
+        const params = new URLSearchParams(window.location.search);
+        const requested = params.get("lang");
+        const stored = localStorage.getItem("pawno:get-started:language");
+        const browserLanguage = navigator.language?.slice(0, 2);
+
+        return [requested, stored, browserLanguage, "en"].find((language) => translations[language]) || "en";
+      }
+
+      function ArrowRightIcon({ className = "h-5 w-5" }) {
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            aria-hidden="true"
+          >
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        );
+      }
+
+      function ArrowLeftIcon({ className = "h-4 w-4" }) {
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            aria-hidden="true"
+          >
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+          </svg>
+        );
+      }
+
+      function CheckIcon({ className = "h-4 w-4" }) {
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            aria-hidden="true"
+          >
+            <path d="M20 6 9 17l-5-5" />
+          </svg>
+        );
+      }
+
+      function UserIcon({ className = "h-5 w-5" }) {
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            aria-hidden="true"
+          >
+            <path d="M20 21a8 8 0 0 0-16 0" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+        );
+      }
+
+      function LanguageSwitch({ language, onChange, label }) {
+        return (
+          <div className="language-switch language-switch--dark" aria-label={label}>
+            {languageOptions.map((option) => (
+              <button
+                key={option.code}
+                type="button"
+                aria-pressed={language === option.code}
+                className={`language-switch__option ${language === option.code ? "language-switch__option--active" : ""}`}
+                onClick={() => onChange(option.code)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        );
+      }
+
+      function Stepper({ t }) {
+        return (
+          <ol className="onboarding-stepper" aria-label={t.stepper.label}>
+            <li className="onboarding-step onboarding-step--active">
+              <span className="onboarding-step__node">
+                <UserIcon />
+              </span>
+              <span className="onboarding-step__label">{t.stepper.details}</span>
+            </li>
+            <li className="onboarding-step">
+              <span className="onboarding-step__node">
+                <CheckIcon className="h-5 w-5" />
+              </span>
+              <span className="onboarding-step__label">{t.stepper.ready}</span>
+            </li>
+          </ol>
+        );
+      }
+
+      function SignupForm({ t, language }) {
+        function handleSubmit(event) {
+          event.preventDefault();
+
+          const formData = new FormData(event.currentTarget);
+          const draft = Object.fromEntries(formData.entries());
+          delete draft.password;
+
+          const params = new URLSearchParams(window.location.search);
+          draft.attribution = {
+            network: params.get("network"),
+            campaign: params.get("campaign"),
+            publisher: params.get("publisher"),
+            clickId: params.get("click_id") || params.get("click"),
+          };
+          draft.status = "draft";
+          draft.language = language;
+          draft.createdAt = new Date().toISOString();
+
+          localStorage.setItem("pawno:get-started:draft", JSON.stringify(draft));
+          params.set("lang", language);
+          window.location.href = `./thank-you.html?${params.toString()}`;
+        }
+
+        return (
+          <section className="signup-flow">
+            <Stepper t={t} />
+
+            <div className="signup-flow__heading">
+              <div>
+                <h1 className="text-3xl font-bold tracking-tight text-pawno-ink sm:text-4xl">
+                  {t.form.heading}
+                </h1>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">
+                  {t.form.intro}
+                </p>
+              </div>
+            </div>
+
+            <form className="signup-form" onSubmit={handleSubmit}>
+              <div className="signup-card signup-card--join">
+                <label className="field">
+                  <span>{t.form.firstName}</span>
+                  <input type="text" name="first_name" placeholder={t.form.firstNamePlaceholder} required />
+                </label>
+
+                <label className="field">
+                  <span>{t.form.lastName}</span>
+                  <input type="text" name="last_name" placeholder={t.form.lastNamePlaceholder} required />
+                </label>
+
+                <label className="field sm:col-span-2">
+                  <span>{t.form.email}</span>
+                  <input type="email" name="email" placeholder={t.form.emailPlaceholder} required />
+                  <small>{t.form.emailHelp}</small>
+                </label>
+
+                <label className="field">
+                  <span>{t.form.password}</span>
+                  <input type="password" name="password" placeholder={t.form.passwordPlaceholder} required minLength="8" />
+                </label>
+
+                <label className="field">
+                  <span>{t.form.phone}</span>
+                  <input type="tel" name="phone" placeholder={t.form.phonePlaceholder} required />
+                  <small>{t.form.phoneHelp}</small>
+                </label>
+
+                <label className="field">
+                  <span>{t.form.category}</span>
+                  <select name="item_category" defaultValue="unsure">
+                    {t.form.categoryOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label className="field">
+                  <span>{t.form.timing}</span>
+                  <select name="timing" defaultValue="checking">
+                    {t.form.timingOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label className="checkbox-field checkbox-field--terms sm:col-span-2">
+                  <input type="checkbox" required />
+                  <span>
+                    {t.form.terms.prefix} <a href="https://www.pawno.io/en/terms-of-use">{t.form.terms.terms}</a>{" "}
+                    {t.form.terms.middle} <a href="https://www.pawno.io/en/privacy-policy">{t.form.terms.privacy}</a>
+                    {t.form.terms.suffix}
+                  </span>
+                </label>
+
+                <label className="checkbox-field checkbox-field--campaign sm:col-span-2">
+                  <input type="checkbox" name="campaign_consent" />
+                  <span>{t.form.campaignConsent}</span>
+                </label>
+              </div>
+
+              <div className="signup-actions">
+                <span>{t.form.step}</span>
+                <button type="submit" className="primary-button primary-button--hero">
+                  {t.form.submit}
+                  <ArrowRightIcon className="h-5 w-5" />
+                </button>
+              </div>
+
+              <p className="signup-terms">
+                {t.form.footerTerms.prefix} <a href="https://www.pawno.io/en/terms-of-use">{t.form.footerTerms.terms}</a>{" "}
+                {t.form.footerTerms.middle}{" "}
+                <a href="https://www.pawno.io/en/privacy-policy">{t.form.footerTerms.privacy}</a>
+                {t.form.footerTerms.suffix}
+              </p>
+            </form>
+          </section>
+        );
+      }
+
+      function App() {
+        const [language, setLanguage] = React.useState(resolveInitialLanguage);
+        const t = translations[language] || translations.en;
+
+        function handleLanguageChange(nextLanguage) {
+          const params = new URLSearchParams(window.location.search);
+          params.set("lang", nextLanguage);
+          window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}${window.location.hash}`);
+          setLanguage(nextLanguage);
+        }
+
+        React.useEffect(() => {
+          document.documentElement.lang = language;
+          document.title = t.meta.title;
+          localStorage.setItem("pawno:get-started:language", language);
+        }, [language, t]);
+
+        return (
+          <main className="signup-page signup-page--join">
+            <section className="split-shell split-shell--onboarding">
+              <aside className="brand-panel brand-panel--customer">
+                <div className="brand-pattern" aria-hidden="true"></div>
+                <div className="onboarding-brand-nav">
+                  <div className="onboarding-brand-top">
+                    <div className="brand-nav-left">
+                      <a href={accountLinks.home} className="brand-logo-link" aria-label={t.brand.homeLabel}>
+                        <img src="./assets/pawno-logo.svg" alt="Pawno" />
+                      </a>
+                      <a href={accountLinks.home} className="brand-back-link">
+                        <ArrowLeftIcon />
+                        {t.brand.back}
+                      </a>
+                    </div>
+                    <LanguageSwitch language={language} onChange={handleLanguageChange} label={t.language.label} />
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-emerald-200">{t.brand.eyebrow}</p>
+                  <h2 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl">
+                    {t.brand.headline}
+                  </h2>
+                  <p className="mt-5 max-w-md text-base leading-7 text-emerald-100">
+                    {t.brand.body}
+                  </p>
+                  <ul className="benefit-list">
+                    {t.brand.benefits.map((benefit) => (
+                      <li key={benefit}>
+                        <CheckIcon />
+                        <span>{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="brand-panel-actions">
+                  <a href={accountLinks.home} className="brand-panel-learn">
+                    {t.brand.learnMore}
+                  </a>
+                  <a href={accountLinks.calculator} className="brand-panel-cta">
+                    {t.brand.calculatorCta}
+                    <ArrowRightIcon className="h-5 w-5" />
+                  </a>
+                </div>
+              </aside>
+
+              <div className="signup-content signup-content--join">
+                <div className="signup-content__top">
+                  <span>{t.top.already}</span>
+                  <a href={accountLinks.signIn} className="signin-pill">
+                    {t.top.signIn}
+                    <ArrowRightIcon className="h-4 w-4" />
+                  </a>
+                </div>
+                <SignupForm t={t} language={language} />
+              </div>
+            </section>
+          </main>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

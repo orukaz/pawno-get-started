@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pawno Thank You</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              background: "#ffffff",
+              foreground: "#020618",
+              muted: "#f1f5f9",
+              "muted-foreground": "#62748e",
+              accent: "#f1f5f9",
+              "accent-foreground": "#0f172b",
+              primary: "#0f172b",
+              "primary-foreground": "#f8fafc",
+              brand: "#00CC77",
+              pawno: {
+                green: "#00CC77",
+                greenDark: "#009767",
+                ink: "#020618",
+                navy: "#0f172b",
+                mist: "#f6faf8",
+                line: "#e5ebf1",
+              },
+            },
+            fontFamily: {
+              sans: ["Geist", "Geist Fallback", "ui-sans-serif", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="bg-pawno-mist font-sans text-pawno-ink antialiased">
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      const links = {
+        home: "./index.html",
+        getStarted: "./get-started.html",
+        dashboard: "https://www.pawno.io/en/dashboard",
+        signIn: "https://www.pawno.io/en/sign-in",
+      };
+
+      function ArrowRightIcon({ className = "h-5 w-5" }) {
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            aria-hidden="true"
+          >
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        );
+      }
+
+      function CheckIcon({ className = "h-4 w-4" }) {
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            aria-hidden="true"
+          >
+            <path d="M20 6 9 17l-5-5" />
+          </svg>
+        );
+      }
+
+      function Header() {
+        return (
+          <header className="site-header bg-white">
+            <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-5 px-5 py-3 sm:px-6 lg:px-10">
+              <a href={links.home} className="flex shrink-0 items-center" aria-label="Pawno home">
+                <span className="logo-frame">
+                  <img src="./assets/pawno-logo.svg" alt="Pawno" className="h-8 w-auto" />
+                </span>
+              </a>
+              <div className="flex items-center gap-3">
+                <a href={links.signIn} className="role-link">
+                  Sign in
+                </a>
+                <a href={links.dashboard} className="role-primary">
+                  Dashboard
+                </a>
+              </div>
+            </div>
+          </header>
+        );
+      }
+
+      function readDraft() {
+        try {
+          return JSON.parse(localStorage.getItem("pawno:get-started:draft")) || {};
+        } catch {
+          return {};
+        }
+      }
+
+      function CampaignSummary({ draft }) {
+        return (
+          <div className="thank-you-summary">
+            <span>Request status</span>
+            <strong>Saved</strong>
+            <dl>
+              <div>
+                <dt>Email</dt>
+                <dd>{draft.email || "Added to your account"}</dd>
+              </div>
+              <div>
+                <dt>Phone</dt>
+                <dd>Saved for request updates</dd>
+              </div>
+              <div>
+                <dt>Next step</dt>
+                <dd>Add item details</dd>
+              </div>
+            </dl>
+          </div>
+        );
+      }
+
+      function App() {
+        const draft = React.useMemo(readDraft, []);
+        const firstName = draft.first_name || "there";
+
+        return (
+          <>
+            <Header />
+            <main className="thank-you-page">
+              <section className="thank-you-shell">
+                <div className="thank-you-hero">
+                  <div className="success-card__icon">
+                    <CheckIcon className="h-7 w-7" />
+                  </div>
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-pawno-greenDark">Thank you</p>
+                  <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight text-pawno-ink sm:text-5xl">
+                    Thanks, {firstName}. Your Pawno account is ready.
+                  </h1>
+                  <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600">
+                    You can continue with your item details now, or come back when you have photos and documents ready.
+                  </p>
+                  <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                    <a href={links.dashboard} className="primary-button primary-button--hero">
+                      Continue to dashboard
+                      <ArrowRightIcon className="h-5 w-5" />
+                    </a>
+                    <a href={`${links.getStarted}${window.location.search}`} className="outline-button">
+                      Edit details
+                    </a>
+                  </div>
+                </div>
+
+                <aside className="thank-you-side">
+                  <CampaignSummary draft={draft} />
+                  <div className="next-card">
+                    <h2>What happens next?</h2>
+                    <ol className="next-list">
+                      <li>
+                        <CheckIcon />
+                        <span>Tell Pawno what you would like to pawn.</span>
+                      </li>
+                      <li>
+                        <CheckIcon />
+                        <span>Add photos and documents when they are available.</span>
+                      </li>
+                      <li>
+                        <CheckIcon />
+                        <span>Continue from your account at any time.</span>
+                      </li>
+                    </ol>
+                  </div>
+                </aside>
+              </section>
+            </main>
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
