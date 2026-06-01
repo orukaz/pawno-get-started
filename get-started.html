@@ -61,9 +61,13 @@
             "body": "Creating an account only saves your details. You can continue later with an offer, a loan, or a sale.",
             "benefits": [
               "Free account with no obligation.",
-              "No photos or documents needed now.",
-              "Free courier pickup for your first item until July 31, 2026."
+              "Add item photos later when you are ready for an offer.",
+              "Documents are only needed later, if you decide to continue."
             ],
+            "promo": {
+              "text": "Join now and get free courier pickup for your first item.",
+              "badge": "Until Jul 31, 2026"
+            },
             "learnMore": "Read more about Pawno",
             "calculatorCta": "Check your possible offer"
           },
@@ -74,6 +78,7 @@
           "stepper": {
             "label": "Registration progress",
             "details": "Your details",
+            "verifyEmail": "Verify email",
             "ready": "Account ready"
           },
           "form": {
@@ -118,7 +123,7 @@
               "suffix": "."
             },
             "campaignConsent": "I would like to receive Pawno campaign offers and reminders.",
-            "step": "Step 1 of 2",
+            "step": "Step 1 of 3",
             "submit": "Create account",
             "footerTerms": {
               "prefix": "By creating an account you agree to Pawno's",
@@ -144,9 +149,13 @@
             "body": "Crear una cuenta solo guarda tus datos. Puedes continuar más tarde con una oferta, un préstamo o una venta.",
             "benefits": [
               "Cuenta gratuita, sin compromiso.",
-              "No necesitas fotos ni documentos ahora.",
-              "Recogida gratuita por mensajería para tu primer artículo hasta el 31 de julio de 2026."
+              "Añade fotos del artículo más tarde, cuando quieras recibir una oferta.",
+              "Los documentos solo se piden después, si decides continuar."
             ],
+            "promo": {
+              "text": "Al crear tu cuenta, la recogida de tu primer artículo es gratuita.",
+              "badge": "Hasta 31 jul 2026"
+            },
             "learnMore": "Conoce Pawno",
             "calculatorCta": "Ver posible oferta"
           },
@@ -157,6 +166,7 @@
           "stepper": {
             "label": "Progreso de registro",
             "details": "Tus datos",
+            "verifyEmail": "Verificar email",
             "ready": "Cuenta lista"
           },
           "form": {
@@ -201,7 +211,7 @@
               "suffix": " de Pawno."
             },
             "campaignConsent": "Quiero recibir ofertas y recordatorios de campañas de Pawno.",
-            "step": "Paso 1 de 2",
+            "step": "Paso 1 de 3",
             "submit": "Crear cuenta",
             "footerTerms": {
               "prefix": "Al crear una cuenta aceptas los",
@@ -227,9 +237,13 @@
             "body": "Konto loomine salvestab ainult sinu andmed. Hiljem saad jätkata pakkumise, laenu või müügi võimalusega.",
             "benefits": [
               "Konto loomine on tasuta ega seo sind kohustustega.",
-              "Fotosid ega dokumente pole praegu vaja.",
-              "Esimese eseme transport on tasuta kuni 31. juulini 2026."
+              "Eseme fotod saad lisada hiljem, kui soovid pakkumist küsida.",
+              "Dokumente küsime alles siis, kui otsustad edasi liikuda."
             ],
+            "promo": {
+              "text": "Liitudes on esimese eseme transport tasuta.",
+              "badge": "Kuni 31.07.2026"
+            },
             "learnMore": "Loe Pawnost lähemalt",
             "calculatorCta": "Vaata võimalikku pakkumist"
           },
@@ -240,6 +254,7 @@
           "stepper": {
             "label": "Registreerimise edenemine",
             "details": "Sinu andmed",
+            "verifyEmail": "E-posti kinnitamine",
             "ready": "Konto valmis"
           },
           "form": {
@@ -284,7 +299,7 @@
               "suffix": "."
             },
             "campaignConsent": "Soovin saada Pawno kampaaniapakkumisi ja meeldetuletusi.",
-            "step": "Samm 1/2",
+            "step": "Samm 1/3",
             "submit": "Loo konto",
             "footerTerms": {
               "prefix": "Konto loomisega nõustud Pawno",
@@ -396,6 +411,25 @@
         );
       }
 
+      function MailIcon({ className = "h-5 w-5" }) {
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            aria-hidden="true"
+          >
+            <rect width="20" height="16" x="2" y="4" rx="2" />
+            <path d="m22 7-10 6L2 7" />
+          </svg>
+        );
+      }
+
       function LanguageSwitch({ language, onChange, label }) {
         return (
           <div className="language-switch language-switch--dark" aria-label={label}>
@@ -415,20 +449,20 @@
       }
 
       function Stepper({ t }) {
+        const steps = [
+          { key: "details", label: t.stepper.details, icon: <UserIcon /> },
+          { key: "verifyEmail", label: t.stepper.verifyEmail, icon: <MailIcon /> },
+          { key: "ready", label: t.stepper.ready, icon: <CheckIcon className="h-5 w-5" /> },
+        ];
+
         return (
           <ol className="onboarding-stepper" aria-label={t.stepper.label}>
-            <li className="onboarding-step onboarding-step--active">
-              <span className="onboarding-step__node">
-                <UserIcon />
-              </span>
-              <span className="onboarding-step__label">{t.stepper.details}</span>
-            </li>
-            <li className="onboarding-step">
-              <span className="onboarding-step__node">
-                <CheckIcon className="h-5 w-5" />
-              </span>
-              <span className="onboarding-step__label">{t.stepper.ready}</span>
-            </li>
+            {steps.map((step, index) => (
+              <li key={step.key} className={`onboarding-step ${index === 0 ? "onboarding-step--active" : ""}`}>
+                <span className="onboarding-step__node">{step.icon}</span>
+                <span className="onboarding-step__label">{step.label}</span>
+              </li>
+            ))}
           </ol>
         );
       }
@@ -641,6 +675,13 @@
                         <span>{benefit}</span>
                       </li>
                     ))}
+                    <li className="benefit-list__promo">
+                      <CheckIcon />
+                      <span className="benefit-list__promo-text">
+                        {t.brand.promo.text}
+                        <span className="benefit-badge">{t.brand.promo.badge}</span>
+                      </span>
+                    </li>
                   </ul>
                 </div>
 

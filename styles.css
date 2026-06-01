@@ -789,6 +789,32 @@ select {
   color: #00cc77;
 }
 
+.benefit-list__promo {
+  align-items: center;
+}
+
+.benefit-list__promo .benefit-list__promo-text {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  align-items: center;
+}
+
+.benefit-badge {
+  display: inline-flex;
+  min-height: 1.75rem;
+  align-items: center;
+  border: 1px solid rgba(0, 204, 119, 0.42);
+  border-radius: 999px;
+  background: rgba(0, 204, 119, 0.15);
+  color: #7dffbd;
+  padding: 0 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
 .brand-panel-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1088,8 +1114,8 @@ select {
 
 .onboarding-stepper {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  width: min(100%, 34rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(100%, 40rem);
   margin: 0 auto 0.25rem;
   padding: 0;
   list-style: none;
@@ -1100,10 +1126,17 @@ select {
   display: grid;
   justify-items: center;
   gap: 0.5rem;
+  min-width: 0;
   color: #75839a;
   font-size: 0.8125rem;
   font-weight: 700;
+  line-height: 1.2;
   text-align: center;
+}
+
+.onboarding-step__label {
+  display: block;
+  max-width: 8.5rem;
 }
 
 .onboarding-step:not(:last-child)::after {
