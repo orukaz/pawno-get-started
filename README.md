@@ -1,12 +1,12 @@
-# Pawno Affiliate Signup
+# Pawno Get Started
 
-Plan for a dedicated Pawno affiliate signup flow that collects qualified leads before sending users into the full pawn application process.
+Example TO-BE Get Started flow for Pawno.io, designed to capture new users from affiliate, SMS, and email campaigns as saved users and draft leads before asking them to complete the full pawn application.
 
 ## Goal
 
-Create a lower-friction registration flow for affiliate traffic.
+Create a lower-friction registration flow for campaign traffic.
 
-The current calculator/application flow is useful for users who are already ready to pawn an item, but it asks for too much too early for campaign traffic. The affiliate flow should first collect the user's core contact details, create their Pawno account through Clerk, sign them in, and then guide them to the next step.
+The current calculator/application flow is useful for users who are already ready to pawn an item, but it asks for too much too early for campaign traffic. The Get Started flow should first collect the user's core contact details, create their Pawno account through Clerk, save a draft lead, sign them in, and then guide them to the next step.
 
 ## Campaign Context
 
@@ -15,6 +15,7 @@ This flow is mainly intended for direct-response traffic where the user has not 
 Important traffic sources:
 
 - SMS campaigns
+- Email campaigns
 - Affiliate platforms
 - LFF / Lead For Finance traffic
 - Revenly affiliate redirect links, for example: https://app.revenly.net/affiliate/click/a1d113f7-137d-41a1-b712-bba67741d7dd
@@ -95,7 +96,7 @@ Captured analysis files:
 
 ## AS-IS Experience
 
-In the current campaign journey, users can arrive from an SMS or affiliate link and are quickly pushed toward the existing website or calculator/application flow.
+In the current campaign journey, users can arrive from an SMS, email, or affiliate link and are quickly pushed toward the existing website or calculator/application flow.
 
 The existing application flow is optimized for users who are already prepared to pawn an item. It can require the user to think about the item, estimate details, upload photos or documents, create an account, and complete email or SMS verification before the lead is safely captured.
 
@@ -103,7 +104,7 @@ For warm but undecided campaign users, this is too much commitment too early.
 
 Typical AS-IS journey:
 
-1. User receives an SMS or clicks an affiliate campaign link.
+1. User receives an SMS or email, or clicks an affiliate campaign link.
 2. User lands on the Pawno website or current calculator/application flow.
 3. User is asked to start a relatively detailed pawn process.
 4. User may need to choose an item, enter item details, prepare photos, and complete account verification.
@@ -117,7 +118,7 @@ Main problems:
 - Intent mismatch: campaign users are often curious, not ready to submit a full pawn application.
 - Too much cognitive load: users must think about item type, item details, photos, documents, and verification at once.
 - Missing readiness: users may not yet know which item they want to pawn.
-- Photo/document friction: users may not have photos or identity documents available when clicking an SMS.
+- Photo/document friction: users may not have photos or identity documents available when clicking an SMS or campaign link.
 - Verification friction: asking for both email and SMS verification early can interrupt the lead capture.
 - Short verification window: a 30-second code window is too short for slower or older users; 3-5 minutes would be more forgiving.
 - Unclear next step: users can feel they are entering a formal loan/pawn process before they understand the benefit.
@@ -125,30 +126,38 @@ Main problems:
 
 ## TO-BE Solution
 
-Create a dedicated `/en/get-started` affiliate signup page that captures the user first and delays the heavier pawn application steps.
+Create a dedicated Get Started page that captures the user first and delays the heavier pawn application steps.
+
+Recommended localized routes:
+
+```text
+/en/get-started
+/es/get-started
+```
 
 The TO-BE flow should:
 
-- Match the intent of SMS and affiliate users.
+- Match the intent of SMS, email, and affiliate users.
 - Ask only for information needed to create a useful lead.
 - Validate email and, if required, verify it after the lead has already been saved.
 - Capture mobile phone without requiring SMS verification in the first step.
 - Save the lead as soon as the minimum valid information is available.
-- Preserve affiliate and UTM attribution.
+- Preserve campaign, affiliate, and UTM attribution.
 - Let the user continue later if they are not ready to submit item details immediately.
 
 Recommended TO-BE journey:
 
-1. User clicks an SMS or affiliate link.
-2. User lands directly on `/en/get-started`.
+1. User clicks an SMS, email, or affiliate link.
+2. User lands directly on `/en/get-started` or `/es/get-started`.
 3. Page explains the low-commitment benefit: get started, no obligation, fast estimate.
 4. User enters basic contact details and rough item intent.
 5. The lead is created or updated in draft status.
-6. Email is validated and verified if required by account policy.
-7. Mobile phone is saved without SMS verification.
-8. A Clerk account is created and the user is signed in.
-9. User is redirected to `/en/dashboard/thank-you`.
-10. Thank-you page offers the next step: continue application, add item photos, or wait for contact.
+6. A Clerk sign-up is created.
+7. Email is validated and verified if required by account policy.
+8. Mobile phone is saved without SMS verification.
+9. A Clerk account/session is completed and the user is signed in.
+10. User is redirected to `/en/dashboard/thank-you` or `/es/dashboard/thank-you`.
+11. Thank-you page offers the next step: continue application, add item photos, or wait for contact.
 
 ## Draft Lead Handling
 
@@ -176,18 +185,21 @@ Example safe URLs:
 ```text
 /en/dashboard/thank-you?draft=ld_8s7K2x
 /en/get-started?draft=ld_8s7K2x
+/es/dashboard/thank-you?draft=ld_8s7K2x
+/es/get-started?draft=ld_8s7K2x
 ```
 
 This would allow the user to return to the draft without exposing personal data in browser history, analytics tools, referrers, or affiliate redirects.
 
 ## Product Decision
 
-Use **Get started** instead of **Register** for the affiliate route and campaign messaging.
+Use **Get started** instead of **Register** for the route and campaign messaging.
 
-Recommended route:
+Recommended routes:
 
 ```text
 /en/get-started
+/es/get-started
 ```
 
 Reasoning:
@@ -205,7 +217,7 @@ Suggested labels:
 
 ## Proposed Flow
 
-1. Affiliate visitor lands on `/en/get-started`.
+1. Campaign visitor lands on `/en/get-started` or `/es/get-started`.
 2. Visitor fills a short signup form.
 3. The form creates or updates a draft lead.
 4. Clerk creates the user account.
@@ -213,10 +225,11 @@ Suggested labels:
 6. User is redirected to an authenticated thank-you page.
 7. Thank-you page offers the next step toward valuation or full pawn application.
 
-Recommended thank-you route:
+Recommended thank-you routes:
 
 ```text
 /en/dashboard/thank-you
+/es/dashboard/thank-you
 ```
 
 ## Form Fields
@@ -245,7 +258,7 @@ Optional fields:
 - Timeline: `Today`, `This week`, `Just checking`
 - Marketing/contact consent
 
-Do not require mobile phone verification in the initial affiliate lead form.
+Do not require mobile phone verification in the initial campaign lead form.
 
 ## Recommended Form Structure
 
@@ -316,7 +329,7 @@ Personal ID should not be required in the first version.
 Reasoning:
 
 - It is sensitive information.
-- It can reduce affiliate landing page conversion.
+- It can reduce campaign landing page conversion.
 - It is more appropriate later in the verified pawn application or KYC step.
 
 If included, it should be optional and clearly labelled as:
@@ -333,11 +346,11 @@ Reasoning:
 
 - Email and password keeps the first implementation simpler.
 - Social login may still require an extra profile-completion step for phone and lead intent.
-- Affiliate tracking and lead metadata should stay consistent across sign-up methods.
+- Campaign tracking and lead metadata should stay consistent across sign-up methods.
 
 Google auth can be added later if account creation drop-off is high.
 
-## Affiliate Tracking
+## Campaign Attribution
 
 Capture campaign metadata and attach it to the created user or lead record.
 
@@ -378,7 +391,7 @@ Use a custom Clerk sign-up flow rather than only the hosted/default sign-up comp
 
 Reasoning:
 
-- The affiliate flow needs custom fields.
+- The Get Started flow needs custom fields.
 - The form needs campaign metadata.
 - The redirect after sign-up should go to the authenticated thank-you page.
 - Phone should be collected without forcing SMS verification at this stage.
@@ -388,14 +401,14 @@ Suggested implementation direction:
 - Use Clerk custom sign-up APIs/hooks.
 - Create the user with email, password, first name, and last name.
 - Store lead-specific fields in metadata or in the app database after account creation.
-- Redirect to `/en/dashboard/thank-you` after a successful sign-up.
+- Redirect to `/en/dashboard/thank-you` or `/es/dashboard/thank-you` after a successful sign-up.
 
 Verification recommendation:
 
 - Email format validation should happen immediately.
 - Email verification can stay required for full account activation, because email is the main recovery and account identifier.
 - Draft lead creation should not depend on the user successfully completing an email or SMS code step.
-- SMS verification should not be required in the affiliate lead form.
+- SMS verification should not be required in the campaign lead form.
 - If verification codes are used, the code lifetime should be increased from roughly 30 seconds to at least 3-5 minutes.
 
 ## Design Direction
@@ -463,22 +476,22 @@ This reduces anxiety and makes it clear the user has not lost progress.
 
 ## Tasks
 
-- [ ] Confirm final route: `/en/get-started`
-- [ ] Confirm thank-you route: `/en/dashboard/thank-you`
+- [ ] Confirm final routes: `/en/get-started`, `/es/get-started`
+- [ ] Confirm thank-you routes: `/en/dashboard/thank-you`, `/es/dashboard/thank-you`
 - [ ] Confirm Revenly/LFF destination URL for Get Started campaigns
 - [ ] Confirm final form fields
 - [ ] Decide whether optional DNI/NIE field is shown in version one
 - [ ] Confirm draft lead data model and status
 - [ ] Confirm safe draft URL/token strategy
-- [ ] Build affiliate signup page
+- [ ] Build Get Started signup page
 - [ ] Implement Clerk custom sign-up flow
-- [ ] Capture affiliate and UTM metadata
+- [ ] Capture affiliate, email, SMS, and UTM metadata
 - [ ] Preserve Revenly query parameters when redirecting into Get Started
 - [ ] Save lead as draft after minimum valid data is available
 - [ ] Create authenticated thank-you page
 - [ ] Add sign-in link for existing users
 - [ ] Review email verification lifetime
-- [ ] Disable SMS verification requirement for affiliate lead capture
+- [ ] Disable SMS verification requirement for campaign lead capture
 - [ ] QA desktop layout
 - [ ] QA mobile layout
 - [ ] Test successful sign-up and redirect
