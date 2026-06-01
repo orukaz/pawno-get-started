@@ -83,14 +83,19 @@
             "firstNamePlaceholder": "Maria",
             "lastName": "Last name",
             "lastNamePlaceholder": "Garcia",
+            "accountSection": "User account",
             "email": "Email address",
             "emailPlaceholder": "maria@example.com",
             "emailHelp": "You will use this email to sign in and receive account updates.",
             "password": "Password",
             "passwordPlaceholder": "Create a password",
+            "passwordConfirm": "Repeat password",
+            "passwordConfirmPlaceholder": "Repeat password",
+            "passwordMismatch": "Passwords do not match.",
             "phone": "Mobile phone",
             "phonePlaceholder": "+34 612 345 678",
-            "phoneHelp": "No SMS code needed now.",
+            "personalId": "National ID code",
+            "personalIdPlaceholder": "Optional",
             "category": "What would you like an offer for?",
             "categoryOptions": [
               { "value": "gold_jewelry", "label": "Gold or jewelry" },
@@ -161,14 +166,19 @@
             "firstNamePlaceholder": "Maria",
             "lastName": "Apellidos",
             "lastNamePlaceholder": "Garcia",
+            "accountSection": "Cuenta de usuario",
             "email": "Correo electrónico",
             "emailPlaceholder": "maria@example.com",
             "emailHelp": "Usarás este correo para iniciar sesión y recibir novedades de tu cuenta.",
             "password": "Contraseña",
             "passwordPlaceholder": "Crea una contraseña",
+            "passwordConfirm": "Repite la contraseña",
+            "passwordConfirmPlaceholder": "Repite la contraseña",
+            "passwordMismatch": "Las contraseñas no coinciden.",
             "phone": "Móvil",
             "phonePlaceholder": "+34 612 345 678",
-            "phoneHelp": "No necesitas código por SMS ahora.",
+            "personalId": "DNI / NIE",
+            "personalIdPlaceholder": "Opcional",
             "category": "¿Sobre qué quieres recibir una oferta?",
             "categoryOptions": [
               { "value": "gold_jewelry", "label": "Oro o joyas" },
@@ -239,14 +249,19 @@
             "firstNamePlaceholder": "Maria",
             "lastName": "Perekonnanimi",
             "lastNamePlaceholder": "Garcia",
+            "accountSection": "Kasutajakonto",
             "email": "E-posti aadress",
             "emailPlaceholder": "maria@example.com",
             "emailHelp": "Kasutad seda e-posti sisselogimiseks ja konto teavituste saamiseks.",
             "password": "Parool",
             "passwordPlaceholder": "Loo parool",
+            "passwordConfirm": "Parool uuesti",
+            "passwordConfirmPlaceholder": "Korda parooli",
+            "passwordMismatch": "Paroolid ei kattu.",
             "phone": "Mobiilinumber",
             "phonePlaceholder": "+34 612 345 678",
-            "phoneHelp": "SMS-koodi pole praegu vaja.",
+            "personalId": "Isikukood",
+            "personalIdPlaceholder": "Valikuline",
             "category": "Millele soovid pakkumist?",
             "categoryOptions": [
               { "value": "gold_jewelry", "label": "Kuld või ehted" },
@@ -424,7 +439,17 @@
 
           const formData = new FormData(event.currentTarget);
           const draft = Object.fromEntries(formData.entries());
+          const passwordConfirm = event.currentTarget.elements.password_confirm;
+
+          if (draft.password !== draft.password_confirm) {
+            passwordConfirm.setCustomValidity(t.form.passwordMismatch);
+            passwordConfirm.reportValidity();
+            return;
+          }
+
+          passwordConfirm.setCustomValidity("");
           delete draft.password;
+          delete draft.password_confirm;
 
           const params = new URLSearchParams(window.location.search);
           draft.attribution = {
@@ -469,22 +494,42 @@
                   <input type="text" name="last_name" placeholder={t.form.lastNamePlaceholder} required />
                 </label>
 
-                <label className="field sm:col-span-2">
-                  <span>{t.form.email}</span>
-                  <input type="email" name="email" placeholder={t.form.emailPlaceholder} required />
-                  <small>{t.form.emailHelp}</small>
-                </label>
-
-                <label className="field">
-                  <span>{t.form.password}</span>
-                  <input type="password" name="password" placeholder={t.form.passwordPlaceholder} required minLength="8" />
-                </label>
-
                 <label className="field">
                   <span>{t.form.phone}</span>
                   <input type="tel" name="phone" placeholder={t.form.phonePlaceholder} required />
-                  <small>{t.form.phoneHelp}</small>
                 </label>
+
+                <label className="field">
+                  <span>{t.form.personalId}</span>
+                  <input type="text" name="personal_id" placeholder={t.form.personalIdPlaceholder} />
+                </label>
+
+                <div className="account-fields sm:col-span-2">
+                  <p className="account-fields__title">{t.form.accountSection}</p>
+                  <div className="account-fields__grid">
+                    <label className="field sm:col-span-2">
+                      <span>{t.form.email}</span>
+                      <input type="email" name="email" placeholder={t.form.emailPlaceholder} required />
+                      <small>{t.form.emailHelp}</small>
+                    </label>
+
+                    <label className="field">
+                      <span>{t.form.password}</span>
+                      <input type="password" name="password" placeholder={t.form.passwordPlaceholder} required minLength="8" />
+                    </label>
+
+                    <label className="field">
+                      <span>{t.form.passwordConfirm}</span>
+                      <input
+                        type="password"
+                        name="password_confirm"
+                        placeholder={t.form.passwordConfirmPlaceholder}
+                        required
+                        minLength="8"
+                      />
+                    </label>
+                  </div>
+                </div>
 
                 <label className="field">
                   <span>{t.form.category}</span>
