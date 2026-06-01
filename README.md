@@ -21,6 +21,56 @@ Important traffic sources:
 
 These users may be interested in getting money quickly, but they are often not ready to complete a full pawn application in the same session.
 
+## Revenly Redirect Example
+
+Example LFF / Revenly affiliate click URL:
+
+```text
+https://app.revenly.net/affiliate/click/a1d113f7-137d-41a1-b712-bba67741d7dd
+```
+
+Observed redirect target on June 1, 2026:
+
+```text
+https://www.pawno.io/es?click=rev_01kt1vn17t1fzz10ejrk2wxt2z&campaign=pawno-io&network=revenly&publisher=default&publisher_id=default&campaign_id=pawno-io&click_id=rev_01kt1vn17t1fzz10ejrk2wxt2z
+```
+
+The exact `rev_...` value is generated per click, so it should be treated as a dynamic click identifier.
+
+Redirect query parameters:
+
+| Parameter | Example value | Meaning | Recommended handling |
+| --- | --- | --- | --- |
+| `click` | `rev_01kt1vn17t1fzz10ejrk2wxt2z` | Revenly click identifier. It currently matches `click_id`. | Store as received. |
+| `click_id` | `rev_01kt1vn17t1fzz10ejrk2wxt2z` | Canonical affiliate click identifier. | Store as the primary affiliate click ID. |
+| `campaign` | `pawno-io` | Campaign slug/name passed by Revenly. | Store as campaign label. |
+| `campaign_id` | `pawno-io` | Campaign ID passed by Revenly. | Store as campaign ID. |
+| `network` | `revenly` | Affiliate network/source. | Store as affiliate network. |
+| `publisher` | `default` | Publisher slug/name. | Store as publisher label. |
+| `publisher_id` | `default` | Publisher ID. | Store as publisher ID. |
+
+Recommended normalized attribution fields:
+
+```text
+affiliate_network=revenly
+affiliate_click_id=rev_01kt1vn17t1fzz10ejrk2wxt2z
+affiliate_campaign=pawno-io
+affiliate_campaign_id=pawno-io
+affiliate_publisher=default
+affiliate_publisher_id=default
+affiliate_landing_url=https://www.pawno.io/es?...
+affiliate_raw_url=https://app.revenly.net/affiliate/click/a1d113f7-137d-41a1-b712-bba67741d7dd
+affiliate_raw_query={...}
+```
+
+For the new Get Started flow, the Revenly link should ideally redirect directly to:
+
+```text
+https://www.pawno.io/es/get-started?click=...&campaign=...&network=revenly&publisher=...&publisher_id=...&campaign_id=...&click_id=...
+```
+
+If the affiliate platform cannot change the destination immediately, Pawno should still capture these parameters on the current landing page and preserve them when sending the user to `/es/get-started` or `/en/get-started`.
+
 ## Current Website References
 
 Live pages:
@@ -298,13 +348,29 @@ Recommended metadata:
 - `utm_campaign`
 - `utm_content`
 - `utm_term`
+- `network`
+- `click`
+- `click_id`
+- `campaign`
+- `campaign_id`
+- `publisher`
+- `publisher_id`
 - `affiliate_id` or `ref`
+- `affiliate_network`
+- `affiliate_click_id`
+- `affiliate_campaign`
+- `affiliate_campaign_id`
+- `affiliate_publisher`
+- `affiliate_publisher_id`
 - `landing_url`
 - `referrer`
 - `gclid`
 - `fbclid`
+- raw query parameters
 
 Attribution should be captured before the user starts filling the form, because campaign users may abandon at any step.
+
+When both raw and normalized values are stored, raw values preserve audit/debug information while normalized values make reporting and CRM follow-up easier.
 
 ## Clerk Implementation Notes
 
@@ -399,6 +465,7 @@ This reduces anxiety and makes it clear the user has not lost progress.
 
 - [ ] Confirm final route: `/en/get-started`
 - [ ] Confirm thank-you route: `/en/dashboard/thank-you`
+- [ ] Confirm Revenly/LFF destination URL for Get Started campaigns
 - [ ] Confirm final form fields
 - [ ] Decide whether optional DNI/NIE field is shown in version one
 - [ ] Confirm draft lead data model and status
@@ -406,6 +473,7 @@ This reduces anxiety and makes it clear the user has not lost progress.
 - [ ] Build affiliate signup page
 - [ ] Implement Clerk custom sign-up flow
 - [ ] Capture affiliate and UTM metadata
+- [ ] Preserve Revenly query parameters when redirecting into Get Started
 - [ ] Save lead as draft after minimum valid data is available
 - [ ] Create authenticated thank-you page
 - [ ] Add sign-in link for existing users
